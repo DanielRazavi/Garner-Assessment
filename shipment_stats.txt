@@ -1,0 +1,61 @@
+Shipment statistics
+===================
+
+Garner is all about logistics. In this assignment we wanted to present a small snippet of the problems that we are solving for our partners on the daily basis.
+
+Data below represents real shipment data for the shipment that originated from Shanghai, China and was received in Toronto, Canada.
+
+Date, Time, Status
+2017-01-25, 12:03:41, Delivered - Signed for by receiver in Toronto, Canada.
+2017-01-25, 09:26:18, With delivery courier
+2017-01-24, 11:41:51, Delivery attempted; recipient not home
+2017-01-24, 09:41:00, Clearance processing complete at ONTARIO SERVICE AREA - CANADA
+2017-01-24, 09:07:52, With delivery courier
+2017-01-24, 06:57:00, Arrived at Sort Facility ONTARIO SERVICE AREA - CANADA
+2017-01-24, 05:06:00, Customs status updated
+2017-01-23, 16:02:24, Departed Facility in CINCINNATI HUB,OH-USA
+2017-01-23, 14:48:08, Processed at CINCINNATI HUB,OH-USA
+2017-01-23, 08:10:00, Customs status updated
+2017-01-22, 21:16:00, Customs status updated
+2017-01-22, 15:23:58, Departed Facility in CINCINNATI HUB,OH-USA
+2017-01-22, 12:39:22, Processed at CINCINNATI HUB,OH-USA
+2017-01-22, 12:17:30, Clearance processing complete at CINCINNATI HUB,OH-USA
+2017-01-22, 11:41:07, Arrived at Sort Facility CINCINNATI HUB,OH-USA
+2017-01-22, 07:02:29, Departed Facility in HONG KONG - HONG KONG
+2017-01-22, 06:20:15, Processed at HONG KONG - HONG KONG
+2017-01-22, 02:24:47, Arrived at Sort Facility HONG KONG - HONG KONG
+2017-01-21, 23:50:00, Customs status updated
+2017-01-21, 22:21:42, Shipment picked up at Shanghai, China
+
+The assignment is to write a simple command line application called "shipment_stats" that will load the data above from the file, performs calculations and
+provides the following statistics based on the data above:
+1. How many hours and minutes did the shipment take between pick up and delivery? Format: hh:mm
+2. What is the total time that shipment spent in Asia, USA, Canada? Format: hh:mm
+3. Which step in the shipment process took the longest time?
+
+Output example:
+
+$ shipment_stats.py (or .sh, .exe, etc)
+Total shipment time: {hr}:{min}
+Total time in Asia: {hr}:{min}
+Total time in USA: {hr}:{min}
+Total time in Canada: {hr}:{min}
+Longest shipment step: from {some status} to {some status}
+
+There are a few things to keep in mind before you begin:
+
+Quality trumps speed! The point with this exercise it is not to race to a solution but to show us
+the best code that you are capable of writing. We would expect this is something you would
+work on in your spare time over a couple of days.
+
+Do state your assumptions. If you feel there is something you cannot make a reasonable
+assumption about then you can email me and I will get the answers to you.
+
+Do provide automated tests where appropriate.
+
+Feel free to use any programming language or IDE.
+
+We are aware that you have to dedicate time to this kind of exercise and we fully appreciate your
+being willing to do so. Our hope is that you will also get some enjoyment out of working on a
+problem that does actually have some relevance to the real world. We look forward to reading
+your response.

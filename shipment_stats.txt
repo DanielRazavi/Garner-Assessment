@@ -9,10 +9,12 @@ Date, Time, Status
 2017-01-25, 12:03:41, Delivered - Signed for by receiver in Toronto, Canada.
 2017-01-25, 09:26:18, With delivery courier
 2017-01-24, 11:41:51, Delivery attempted; recipient not home
+
 2017-01-24, 09:41:00, Clearance processing complete at ONTARIO SERVICE AREA - CANADA
 2017-01-24, 09:07:52, With delivery courier
 2017-01-24, 06:57:00, Arrived at Sort Facility ONTARIO SERVICE AREA - CANADA
 2017-01-24, 05:06:00, Customs status updated
+
 2017-01-23, 16:02:24, Departed Facility in CINCINNATI HUB,OH-USA
 2017-01-23, 14:48:08, Processed at CINCINNATI HUB,OH-USA
 2017-01-23, 08:10:00, Customs status updated
@@ -21,9 +23,11 @@ Date, Time, Status
 2017-01-22, 12:39:22, Processed at CINCINNATI HUB,OH-USA
 2017-01-22, 12:17:30, Clearance processing complete at CINCINNATI HUB,OH-USA
 2017-01-22, 11:41:07, Arrived at Sort Facility CINCINNATI HUB,OH-USA
+
 2017-01-22, 07:02:29, Departed Facility in HONG KONG - HONG KONG
 2017-01-22, 06:20:15, Processed at HONG KONG - HONG KONG
 2017-01-22, 02:24:47, Arrived at Sort Facility HONG KONG - HONG KONG
+
 2017-01-21, 23:50:00, Customs status updated
 2017-01-21, 22:21:42, Shipment picked up at Shanghai, China
 

@@ -28,7 +28,6 @@ class line_info():
         self.duration = dt.timedelta(0)
 
     def translate_time(self):
-        # check if country and location are set
         try:
             from_tz = tz.gettz(location_bank[(self.country, self.location)][1])
             to_zone = tz.gettz('UTC')
@@ -45,7 +44,6 @@ class line_info():
 
 time_continent = {}
 time_country = {}
-
 the_data = []
 max_obj = line_info(0,0,0)
 
@@ -210,5 +208,10 @@ except FileNotFoundError:
 print("Total shipment time: {0}:{1}".format(th, tm))
 print("Total time in Asia: {0}:{1}".format(ah, am))
 print("Total time in USA: {0}:{1}".format(uh, um))
-# Are you sure that the Longest shipment step is not the summation of said step overal or just the one instance?
 print("Longest shipment step: from \"{0}\" to \"{1}\"".format(max_obj.status,the_data[the_data.index(max_obj)+1].status))
+
+# Resseting the data variables since they are no longer needed
+time_continent = None
+time_country = None
+the_data = None
+max_obj = None

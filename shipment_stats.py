@@ -114,7 +114,7 @@ try:
 
             match_str3 = re.match(r'(Arrived at Sort Facility|Shipment picked up at|Delivered - Signed for by receiver in)(.*)[,-]([\w\s]*)\.?$', match_str.group(2), re.M | re.I)
 
-            if (category == "Delivered") and not (the_data[-1].location == match_str3.group(2).strip().lower()):
+            if (category == "Delivered") and not (the_data[-1].country == match_str3.group(3).strip().lower()):
                 lazy_error_msg("Logistic Error in status, location wasn't `" + match_str3.group(2).strip().lower() + "` before.")
 
             line_obj.location = match_str3.group(2).strip().lower()

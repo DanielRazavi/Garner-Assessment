@@ -9,12 +9,13 @@ import re
 import datetime as dt
 from dateutil import tz
 
-location_bank = {('china','shanghai'):['Asia', 'PRC'],
-                 ('hong kong','hong kong'):['Asia','Hongkong'],
-                 ('usa','cincinnati hub,oh'):['North America','US/Eastern'],
-                 ('canada','ontario service area'): ['North America', 'Canada/Eastern'],
-                 ('canada','toronto'):['North America','Canada/Eastern']}
+# Check to see if ther right amount of parameters are given.
+if len(sys.argv)!=2:
+    print("Need to give the right number of parameters (one).\nFor example:\n\t python shipment_stats.py test_data.txt")
+    exit()
 
+
+# A class object created to treat each line of data as its own entity.
 class line_info():
 
     def __init__(self, time, given_status, category):
@@ -27,6 +28,7 @@ class line_info():
         self.location = None
         self.duration = dt.timedelta(0)
 
+    # A method that translates the given time to a standard time so that durations can be calculated correctly.
     def translate_time(self):
         try:
             from_tz = tz.gettz(location_bank[(self.country, self.location)][1])
@@ -41,25 +43,39 @@ class line_info():
             else:
                 lazy_error_msg("Location," + str((self.location, self.country)) + " doesn't exist in location_bank.")
 
+# The data that is assumed that will be given in the real world.
+location_bank = {('china','shanghai'):['Asia', 'PRC'],
+                 ('hong kong','hong kong'):['Asia','Hongkong'],
+                 ('usa','cincinnati hub,oh'):['North America','US/Eastern'],
+                 ('canada','ontario service area'): ['North America', 'Canada/Eastern'],
+                 ('canada','toronto'):['North America','Canada/Eastern']}
 
+
+# Setting up the variables that will contain all the scraped data.
 time_continent = {}
 time_country = {}
 the_data = []
 max_obj = line_info(0,0,0)
 
 
+# A function that gives custom error message so that it can exactly pinpoint the error of the data by line number and
+# to finally exit out of the program so that the code cannot continue on.
 def lazy_error_msg(string):
     line_number = open(sys.argv[1]).readlines().index(line) + 1
     error_message = "In '" + str(sys.argv[1]) + "', line number " + str(line_number) + ": " + string
     print(error_message)
     exit()
 
-def give_hm(given_time):
-    hours = (given_time.days * 24) + (given_time.seconds // 3600)
-    minutes = (given_time.seconds-((given_time.seconds//3600)*3600))//60
-    if ((given_time.seconds - (given_time.seconds // 60) * 60) > 0): minutes += 1
+# A mini duration calculator which recieves a duration object and returns two integers that signify the duration time
+# in hours and minutes.
+def give_hm(given_duration):
+    hours = (given_duration.days * 24) + (given_duration.seconds // 3600)
+    minutes = (given_duration.seconds-((given_duration.seconds//3600)*3600))//60
+    if ((given_duration.seconds - (given_duration.seconds // 60) * 60) > 0): minutes += 1
     return hours,minutes
 
+# A function that acts like a book keeper and keeps track of the amount of time spent in a certain country or location
+# and also keeps track of the Longest shipment step in the data.
 def time_tracker(given_time):
 
     global max_obj
@@ -85,11 +101,9 @@ def time_tracker(given_time):
     else:
         time_continent[this_continent] = the_data[-1].duration
 
-if len(sys.argv)!=2:
-    print("Need to give the right number of parameters (one).\nFor example:\n\t python shipment_stats.py test_data.txt")
-    exit()
 
 try:
+    # Processing all lines.
     for line in reversed(open(sys.argv[1]).readlines()):
 
         if re.match(r'(Date, Time, Status|[\r\n\s]+)', line, re.M | re.I): continue
@@ -100,13 +114,7 @@ try:
         match_str2 = re.match(r'(\w+).*', match_str.group(2), re.M | re.I)
         category = match_str2.group(1)
 
-        if category!="Shipment" and (len(the_data) == 0):
-            lazy_error_msg("Shipment was never officially shipped.")
-            print("File contains not enouagh/no data.")
-            exit()
-
         line_obj = line_info(time_object, match_str.group(2), category)
-
 
         if category in ["Shipment", "Arrived", "Delivered"]:
 
@@ -121,7 +129,6 @@ try:
 
             if category != "Shipment":
                 time_tracker(line_obj.time)
-
 
         elif category in ["Processed","Departed","Clearance"]:
             match_str3 = re.match(r'(Processed at|Departed Facility in|Clearance processing complete at)(.*)-(.*)$', match_str.group(2), re.M | re.I)
@@ -163,21 +170,24 @@ try:
 
         the_data.append(line_obj)
 
+    # Making sure the shipment was shipped.
     if the_data[0].info_type != "Shipment":
         lazy_error_msg("Shipment was never officially shipped.")
 
+    # Making sure the shipment was delivered.
     elif the_data[-1].info_type != "Delivered":
         lazy_error_msg("Shipment was never delivered.")
 
+    # Total Time Calculations
+    th, tm = give_hm(the_data[-1].time - the_data[0].time)
 
-    total_time = the_data[-1].time - the_data[0].time
-    th, tm = give_hm(total_time)
-
+    # Time Spent in Asia Calculations
     if not('Asia' in time_continent):
         ah,am = 0
     else:
         ah, am = give_hm(time_continent['Asia'])
 
+    #Time Spent in USA Calculations
     if not('usa' in time_country):
         uh, um = 0, 0
     else:
